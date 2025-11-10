@@ -326,11 +326,13 @@ const LegalAssistantRefined = () => {
                   {activeView === 'chat' && 'Legal Assistant'}
                   {activeView === 'cases' && 'Case Law Search'}
                   {activeView === 'document' && 'Document Analysis'}
+                  {activeView === 'info' && 'Help & Information'}
                 </h2>
                 <p className={`text-sm hidden sm:block ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
                   {activeView === 'chat' && 'Ask any legal question'}
                   {activeView === 'cases' && 'Search Indian case law database'}
                   {activeView === 'document' && 'Analyze legal documents'}
+                  {activeView === 'info' && 'Get help and information'}
                 </p>
               </div>
             </div>
@@ -747,7 +749,9 @@ const LegalAssistantRefined = () => {
               </div>
             </div>
           )}
-          {/* Info Page Overlay */}
+
+        </div>
+        {/* Info Page Overlay */}
           {activeView === 'info' && (
             <div className={`p-6 lg:p-12 max-w-3xl mx-auto ${
               darkMode ? 'bg-slate-900 text-white' : 'bg-white text-gray-900'
@@ -783,8 +787,6 @@ const LegalAssistantRefined = () => {
               </p>
             </div>
           )}
-
-        </div>
       </main>
     </div>
   );
