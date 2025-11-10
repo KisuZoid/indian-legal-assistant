@@ -435,7 +435,7 @@ const LegalAssistantRefined = () => {
                           type="text"
                           value={query}
                           onChange={(e) => setQuery(e.target.value)}
-                          onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+                          onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
                           placeholder="Ask about IPC sections, legal rights, case law..."
                           className={`w-full pl-14 pr-24 py-5 rounded-2xl text-base focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                             darkMode 
@@ -570,7 +570,7 @@ const LegalAssistantRefined = () => {
                       type="text"
                       value={query}
                       onChange={(e) => setQuery(e.target.value)}
-                      onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+                      onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
                       placeholder="Ask about IPC sections, legal rights, case law..."
                       className={`flex-1 px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm ${
                         darkMode 
@@ -600,7 +600,7 @@ const LegalAssistantRefined = () => {
                     type="text"
                     value={caseSearch}
                     onChange={(e) => setCaseSearch(e.target.value)}
-                    onKeyPress={(e) => e.key === 'Enter' && handleCaseSearch()}
+                    onKeyDown={(e) => e.key === 'Enter' && handleCaseSearch()}
                     placeholder="Search by case name, legal principle, or topic..."
                     className={`flex-1 px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
                       darkMode 
