@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Search, FileText, Scale, /*BookOpen*/ Send, Loader2, AlertCircle, CheckCircle, MessageSquare, Book, Gavel, Menu, X, Plus, Home, Settings, HelpCircle, Moon, Sun, Sparkles, Briefcase /*Users*/ } from 'lucide-react';
+import { Search, FileText, Scale, /*BookOpen*/ Send, Loader2, AlertCircle, CheckCircle, MessageSquare, Book, Gavel, Menu, X, Plus, Home, Settings, HelpCircle, Moon, Sun, Sparkles, Briefcase, ArrowLeft /*Users*/ } from 'lucide-react';
+
 
 const legalDatabase = {
   ipcSections: {
@@ -60,6 +61,7 @@ const legalDatabase = {
 };
 
 const LegalAssistantRefined = () => {
+  const [showInfoTooltip, setShowInfoTooltip] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [activeView, setActiveView] = useState('chat');
   const [query, setQuery] = useState('');
@@ -350,11 +352,31 @@ const LegalAssistantRefined = () => {
               >
                 {darkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
               </button>
-              <button className={`p-2 rounded-lg ${
-                darkMode ? 'hover:bg-slate-800 text-gray-400' : 'hover:bg-gray-100 text-gray-600'
-              }`}>
-                <HelpCircle className="h-5 w-5" />
-              </button>
+              <div
+                className="relative"
+                onMouseEnter={() => setShowInfoTooltip(true)}
+                onMouseLeave={() => setShowInfoTooltip(false)}
+                onTouchStart={() => setShowInfoTooltip(true)}
+                onTouchEnd={() => setTimeout(() => setShowInfoTooltip(false), 1500)}
+              >
+                <button
+                  onClick={() => setActiveView('info')}
+                  className={`p-2 rounded-lg transition-colors ${
+                    darkMode 
+                    ? 'hover:bg-slate-800 text-gray-400' 
+                    : 'hover:bg-gray-100 text-gray-600'
+                  }`}
+                >
+                  <HelpCircle className="h-5 w-5" />
+                </button>
+
+                {showInfoTooltip && (
+                  <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 whitespace-nowrap bg-slate-800 text-white text-xs px-3 py-1 rounded-lg shadow-lg">
+                    Help
+                  </div>
+                )}
+              </div>
+
             </div>
           </div>
         </header>
@@ -725,6 +747,43 @@ const LegalAssistantRefined = () => {
               </div>
             </div>
           )}
+          {/* Info Page Overlay */}
+          {activeView === 'info' && (
+            <div className={`p-6 lg:p-12 max-w-3xl mx-auto ${
+              darkMode ? 'bg-slate-900 text-white' : 'bg-white text-gray-900'
+            }`}>
+              <button
+                onClick={() => setActiveView('chat')}
+                className={`flex items-center gap-2 mb-6 px-4 py-2 rounded-lg ${
+                  darkMode ? 'bg-slate-800 hover:bg-slate-700' : 'bg-gray-100 hover:bg-gray-200'
+                }`}
+              >
+                <ArrowLeft className="h-5 w-5" />
+                Back
+              </button>
+
+              <h1 className="text-3xl font-bold mb-4">Help (About Legal Assistant)</h1>
+              <p className="mb-4">
+                This AI-powered assistant helps users understand Indian legal principles, IPC sections, case law, and more.
+                It provides <strong>legal information</strong>, not legal advice.
+              </p>
+
+              <h2 className="text-xl font-semibold mt-6 mb-2">Features</h2>
+              <ul className="list-disc pl-6 space-y-2">
+                <li>Instant answers to legal queries</li>
+                <li>Case law and IPC section lookup</li>
+                <li>Smart document analysis</li>
+                <li>Dark/light theme support</li>
+              </ul>
+
+              <h2 className="text-xl font-semibold mt-6 mb-2">Disclaimer</h2>
+              <p>
+                The information provided here is for educational purposes only and does not constitute legal advice.
+                For personalized legal guidance, please consult a qualified lawyer.
+              </p>
+            </div>
+          )}
+
         </div>
       </main>
     </div>
