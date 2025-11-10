@@ -269,14 +269,28 @@ const LegalAssistantRefined = () => {
         </div>
 
         <div className={`border-t p-4 space-y-1 ${darkMode ? 'border-slate-800' : 'border-slate-800'}`}>
-          <button className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-slate-800 transition-colors text-slate-300 hover:text-white">
+          <button
+            onClick={() => {
+              setActiveView('document');
+              setSidebarOpen(false);
+            }}
+            className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-slate-800 transition-colors text-slate-300 hover:text-white"
+          >
             <FileText className="h-5 w-5" />
             <span className="text-sm font-medium">Documents</span>
           </button>
-          <button className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-slate-800 transition-colors text-slate-300 hover:text-white">
+
+          <button
+            onClick={() => {
+              setActiveView('cases');
+              setSidebarOpen(false);
+            }}
+            className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-slate-800 transition-colors text-slate-300 hover:text-white"
+          >
             <Book className="h-5 w-5" />
             <span className="text-sm font-medium">Resources</span>
           </button>
+
           <button className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-slate-800 transition-colors text-slate-300 hover:text-white">
             <Settings className="h-5 w-5" />
             <span className="text-sm font-medium">Settings</span>
