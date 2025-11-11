@@ -70,7 +70,7 @@ const LegalAssistantRefined = () => {
   const [documentText, setDocumentText] = useState('');
   const [caseSearch, setCaseSearch] = useState('');
   const [searchResults, setSearchResults] = useState([]);
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(true);
   const [conversations] = useState([
     { id: 1, title: 'Contract Review Question', time: '2 hours ago' },
     { id: 2, title: 'Employment Law Inquiry', time: 'Yesterday' },
@@ -779,12 +779,25 @@ const LegalAssistantRefined = () => {
                 <li>Smart document analysis</li>
                 <li>Dark/light theme support</li>
               </ul>
+              <br />
 
-              <h2 className="text-xl font-semibold mt-6 mb-2">Disclaimer</h2>
-              <p>
-                The information provided here is for educational purposes only and does not constitute legal advice.
-                For personalized legal guidance, please consult a qualified lawyer.
-              </p>
+              <div className={`mb-8 rounded-2xl p-4 border ${
+                      darkMode 
+                        ? 'bg-amber-900/20 border-amber-800/50' 
+                        : 'bg-amber-50 border-amber-200'
+                    }`}>
+                      <div className="flex items-start gap-3">
+                        <AlertCircle className={`h-5 w-5 mt-0.5 flex-shrink-0 ${
+                          darkMode ? 'text-amber-400' : 'text-amber-600'
+                        }`} />
+                        <div>
+                          <p className={`text-sm ${darkMode ? 'text-amber-200' : 'text-amber-900'}`}>
+                            <strong>Legal Disclaimer:</strong> This provides legal information, not advice. 
+                            For specific legal advice, consult a qualified lawyer.
+                          </p>
+                        </div>
+                      </div>
+                </div>
             </div>
           )}
       </main>
