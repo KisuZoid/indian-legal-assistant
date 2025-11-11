@@ -41,7 +41,7 @@ export default function App() {
   const [darkMode, setDarkMode] = useState(true);
 
   // --- Demo conversation list
-  const [conversations, setConversations] = useState([
+  const [conversations, /*setConversations*/] = useState([
     { id: 1, title: 'Contract Review Question', time: '2 hours ago' },
     { id: 2, title: 'Employment Law Inquiry', time: 'Yesterday' },
     { id: 3, title: 'Tenant Rights Question', time: '2 days ago' }

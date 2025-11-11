@@ -7,7 +7,7 @@
  */
 
 import React, { useState } from 'react';
-import { Search, Send, Loader2, AlertCircle, Scale, Sparkles } from 'lucide-react';
+import { Search, Send, Loader2, Scale} from 'lucide-react';
 import MessageBubble from './MessageBubble';
 import PopularTopicCard from '../Common/PopularTopicCard';
 import DisclaimerBox from '../Common/DisclaimerBox';
