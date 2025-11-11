@@ -293,7 +293,12 @@ const LegalAssistantRefined = () => {
             <span className="text-sm font-medium">Resources</span>
           </button>
 
-          <button className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-slate-800 transition-colors text-slate-300 hover:text-white">
+          <button
+          onClick={() => {
+              setActiveView('settings');
+              setSidebarOpen(false);
+            }}
+          className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-slate-800 transition-colors text-slate-300 hover:text-white">
             <Settings className="h-5 w-5" />
             <span className="text-sm font-medium">Settings</span>
           </button>
@@ -327,12 +332,14 @@ const LegalAssistantRefined = () => {
                   {activeView === 'cases' && 'Case Law Search'}
                   {activeView === 'document' && 'Document Analysis'}
                   {activeView === 'info' && 'Help & Information'}
+                  {activeView === 'settings' && 'Settings'}
                 </h2>
                 <p className={`text-sm hidden sm:block ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
                   {activeView === 'chat' && 'Ask any legal question'}
                   {activeView === 'cases' && 'Search Indian case law database'}
                   {activeView === 'document' && 'Analyze legal documents'}
                   {activeView === 'info' && 'Get help and information'}
+                  {activeView === 'settings' && 'Adjust your preferences'}
                 </p>
               </div>
             </div>
@@ -382,8 +389,9 @@ const LegalAssistantRefined = () => {
             </div>
           </div>
         </header>
-
-        <div className={`border-b px-4 lg:px-8 overflow-x-auto ${
+        
+        {activeView !== 'settings' && activeView !== 'info' && (
+        <div id="navbar" className={`border-b px-4 lg:px-8 overflow-x-auto ${
           darkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-gray-200'
         }`}>
           <div className="flex gap-1 min-w-max">
@@ -437,6 +445,7 @@ const LegalAssistantRefined = () => {
             </button>
           </div>
         </div>
+        )}
 
         <div className="flex-1 overflow-y-auto">
           {activeView === 'chat' && (
@@ -750,12 +759,12 @@ const LegalAssistantRefined = () => {
             </div>
           )}
 
-        </div>
-        {/* Info Page Overlay */}
+          {/* Info Page Overlay */}
           {activeView === 'info' && (
             <div className={`p-6 lg:p-12 max-w-3xl mx-auto ${
               darkMode ? 'bg-slate-900 text-white' : 'bg-white text-gray-900'
             }`}>
+              
               <button
                 onClick={() => setActiveView('chat')}
                 className={`flex items-center gap-2 mb-6 px-4 py-2 rounded-lg ${
@@ -800,6 +809,28 @@ const LegalAssistantRefined = () => {
                 </div>
             </div>
           )}
+
+          {/* settings */}
+          
+          {activeView === 'settings' && (
+            <div className={`p-6 lg:p-12 max-w-3xl mx-auto ${
+              darkMode ? 'bg-slate-900 text-white' : 'bg-white text-gray-900'
+            }`}>
+              
+              <button
+                onClick={() => setActiveView('chat')}
+                className={`flex items-center gap-2 mb-6 px-4 py-2 rounded-lg ${
+                  darkMode ? 'bg-slate-800 hover:bg-slate-700' : 'bg-gray-100 hover:bg-gray-200'
+                }`}
+              >
+                <ArrowLeft className="h-5 w-5" />
+                Back
+              </button>
+              <h1 className="text-3xl font-bold mb-4">Settings</h1>
+              {/* Future settings can be added here */}              
+            </div>
+          )}
+        </div>
       </main>
     </div>
   );
