@@ -11,8 +11,9 @@ import { Search, Send, Loader2, Scale} from 'lucide-react';
 import MessageBubble from './MessageBubble';
 import PopularTopicCard from '../Common/PopularTopicCard';
 import DisclaimerBox from '../Common/DisclaimerBox';
+import generateResponse from '../../utils/generateResponse';
 
-export default function ChatView({ darkMode, generateResponse }) {
+export default function ChatView({ darkMode }) {
   const [query, setQuery] = useState('');
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);

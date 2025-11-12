@@ -1,23 +1,38 @@
-// src/components/Settings/UserPopup.js
 /**
- * UserPopup - Login / Signup / Profile modal
- * - Inspired by CodePen: FlorinPop17
- * - Dark/light adaptive
+ * UserPopup - Polished Login / Signup / Profile modal
+ * - Inspired by FlorinPop17 aesthetic
+ * - Dark/light adaptive, polished design
  */
 
 import React, { useState } from 'react';
+import { X, User } from 'lucide-react';
 
-export default function UserPopup({ open, onClose, onLogin, onLogout, user, darkMode }) {
-  const [isLogin, setIsLogin] = useState(true);
-  const [formData, setFormData] = useState({ email: '', password: '' });
+export default function UserPopup({
+  open,
+  onClose,
+  onLogin,
+  onLogout,
+  user,
+  darkMode,
+}) {
+  const [isSignUp, setIsSignUp] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+  });
 
   if (!open) return null;
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const userObj = { name: formData.email.split('@')[0], email: formData.email };
+    const userObj = {
+      name: isSignUp ? formData.name : formData.email.split('@')[0],
+      email: formData.email,
+    };
     onLogin(userObj);
     localStorage.setItem('demo_logged_in', JSON.stringify(userObj));
+    setFormData({ name: '', email: '', password: '' });
     onClose();
   };
 
@@ -28,95 +43,185 @@ export default function UserPopup({ open, onClose, onLogin, onLogout, user, dark
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4">
       <div
-        className={`rounded-2xl shadow-2xl w-full max-w-sm p-8 relative ${
-          darkMode ? 'bg-slate-800 text-white' : 'bg-white text-gray-900'
+        className={`rounded-2xl shadow-2xl w-full max-w-md relative overflow-hidden ${
+          darkMode ? 'bg-slate-800' : 'bg-white'
         }`}
       >
-        <button
-          onClick={onClose}
-          className="absolute top-3 right-3 text-gray-400 hover:text-gray-600"
-        >
-          ✕
-        </button>
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 pointer-events-none"></div>
 
-        {!user ? (
-          <>
-            <h2 className="text-2xl font-bold mb-4 text-center">
-              {isLogin ? 'Login' : 'Sign Up'}
-            </h2>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <input
-                type="email"
-                required
-                placeholder="Email"
-                value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                className={`w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                  darkMode
-                    ? 'bg-slate-700 border-slate-600 placeholder-gray-400 text-white'
-                    : 'bg-gray-50 border-gray-300 placeholder-gray-500 text-gray-900'
+        <div className="relative p-8">
+          <button
+            onClick={onClose}
+            className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition"
+          >
+            <X className="h-5 w-5" />
+          </button>
+
+          {!user ? (
+            <>
+              <div className="text-center mb-6">
+                <div
+                  className={`inline-flex p-3 rounded-2xl mb-4 ${
+                    darkMode ? 'bg-blue-900/30' : 'bg-blue-100'
+                  }`}
+                >
+                  <User className="h-8 w-8 text-blue-600" />
+                </div>
+                <h2
+                  className={`text-2xl font-bold ${
+                    darkMode ? 'text-white' : 'text-gray-900'
+                  }`}
+                >
+                  {isSignUp ? 'Create Account' : 'Welcome Back'}
+                </h2>
+                <p
+                  className={`text-sm mt-1 ${
+                    darkMode ? 'text-gray-400' : 'text-gray-600'
+                  }`}
+                >
+                  {isSignUp
+                    ? 'Sign up to save your conversations'
+                    : 'Sign in to continue'}
+                </p>
+              </div>
+
+              <form onSubmit={handleSubmit} className="space-y-4">
+                {isSignUp && (
+                  <div>
+                    <label
+                      className={`block text-sm font-medium mb-1 ${
+                        darkMode ? 'text-gray-300' : 'text-gray-700'
+                      }`}
+                    >
+                      Full Name
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="John Doe"
+                      value={formData.name}
+                      onChange={(e) =>
+                        setFormData({ ...formData, name: e.target.value })
+                      }
+                      className={`w-full px-4 py-3 rounded-xl border focus:outline-none focus:ring-2 focus:ring-blue-500 transition ${
+                        darkMode
+                          ? 'bg-slate-700 border-slate-600 text-white placeholder-gray-400'
+                          : 'bg-gray-50 border-gray-300 text-gray-900 placeholder-gray-500'
+                      }`}
+                    />
+                  </div>
+                )}
+
+                <div>
+                  <label
+                    className={`block text-sm font-medium mb-1 ${
+                      darkMode ? 'text-gray-300' : 'text-gray-700'
+                    }`}
+                  >
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    required
+                    placeholder="you@example.com"
+                    value={formData.email}
+                    onChange={(e) =>
+                      setFormData({ ...formData, email: e.target.value })
+                    }
+                    className={`w-full px-4 py-3 rounded-xl border focus:outline-none focus:ring-2 focus:ring-blue-500 transition ${
+                      darkMode
+                        ? 'bg-slate-700 border-slate-600 text-white placeholder-gray-400'
+                        : 'bg-gray-50 border-gray-300 text-gray-900 placeholder-gray-500'
+                    }`}
+                  />
+                </div>
+
+                <div>
+                  <label
+                    className={`block text-sm font-medium mb-1 ${
+                      darkMode ? 'text-gray-300' : 'text-gray-700'
+                    }`}
+                  >
+                    Password
+                  </label>
+                  <input
+                    type="password"
+                    required
+                    placeholder="••••••••"
+                    value={formData.password}
+                    onChange={(e) =>
+                      setFormData({ ...formData, password: e.target.value })
+                    }
+                    className={`w-full px-4 py-3 rounded-xl border focus:outline-none focus:ring-2 focus:ring-blue-500 transition ${
+                      darkMode
+                        ? 'bg-slate-700 border-slate-600 text-white placeholder-gray-400'
+                        : 'bg-gray-50 border-gray-300 text-gray-900 placeholder-gray-500'
+                    }`}
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white py-3 rounded-xl font-medium transition-all transform hover:scale-[1.02] active:scale-[0.98]"
+                >
+                  {isSignUp ? 'Create Account' : 'Sign In'}
+                </button>
+              </form>
+
+              <div className="mt-6 text-center">
+                <p
+                  className={`text-sm ${
+                    darkMode ? 'text-gray-400' : 'text-gray-600'
+                  }`}
+                >
+                  {isSignUp
+                    ? 'Already have an account?'
+                    : "Don't have an account?"}{' '}
+                  <button
+                    onClick={() => setIsSignUp(!isSignUp)}
+                    className="text-blue-500 hover:text-blue-600 font-medium transition"
+                  >
+                    {isSignUp ? 'Sign In' : 'Sign Up'}
+                  </button>
+                </p>
+              </div>
+            </>
+          ) : (
+            <div className="text-center space-y-6">
+              <div
+                className={`inline-flex p-4 rounded-2xl ${
+                  darkMode ? 'bg-green-900/30' : 'bg-green-100'
                 }`}
-              />
-              <input
-                type="password"
-                required
-                placeholder="Password"
-                value={formData.password}
-                onChange={(e) =>
-                  setFormData({ ...formData, password: e.target.value })
-                }
-                className={`w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                  darkMode
-                    ? 'bg-slate-700 border-slate-600 placeholder-gray-400 text-white'
-                    : 'bg-gray-50 border-gray-300 placeholder-gray-500 text-gray-900'
-                }`}
-              />
-              <button
-                type="submit"
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg transition"
               >
-                {isLogin ? 'Login' : 'Create Account'}
+                <User className="h-12 w-12 text-green-600" />
+              </div>
+              <div>
+                <h2
+                  className={`text-2xl font-bold mb-1 ${
+                    darkMode ? 'text-white' : 'text-gray-900'
+                  }`}
+                >
+                  {user.name}
+                </h2>
+                <p
+                  className={`text-sm ${
+                    darkMode ? 'text-gray-400' : 'text-gray-600'
+                  }`}
+                >
+                  {user.email}
+                </p>
+              </div>
+              <button
+                onClick={handleLogoutClick}
+                className="w-full bg-gradient-to-r from-rose-600 to-rose-700 hover:from-rose-700 hover:to-rose-800 text-white py-3 rounded-xl font-medium transition-all transform hover:scale-[1.02] active:scale-[0.98]"
+              >
+                Sign Out
               </button>
-            </form>
-
-            <p className="text-sm text-center mt-4">
-              {isLogin ? (
-                <>
-                  Don’t have an account?{' '}
-                  <button
-                    onClick={() => setIsLogin(false)}
-                    className="text-blue-500 hover:underline"
-                  >
-                    Sign up
-                  </button>
-                </>
-              ) : (
-                <>
-                  Already have an account?{' '}
-                  <button
-                    onClick={() => setIsLogin(true)}
-                    className="text-blue-500 hover:underline"
-                  >
-                    Login
-                  </button>
-                </>
-              )}
-            </p>
-          </>
-        ) : (
-          <div className="text-center space-y-4">
-            <h2 className="text-xl font-bold mb-2">Welcome, {user.name}</h2>
-            <p className="text-sm text-gray-400">{user.email}</p>
-            <button
-              onClick={handleLogoutClick}
-              className="bg-rose-600 hover:bg-rose-700 text-white py-2 px-4 rounded-lg w-full transition"
-            >
-              Logout
-            </button>
-          </div>
-        )}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
